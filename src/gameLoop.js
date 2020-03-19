@@ -96,7 +96,7 @@ async function start_turn(io, gameState, room_index) {
       while (current_turn.word == '?' && choose_sec > 0) {
         console.log(choose_sec)
         io.in(room_index)
-          .emit('turn_countdown_sec', { sec: choose_sec });        
+          .emit('turn_countdown_sec', { sec: choose_sec, ready: false });        
         await sleep(1000);
         choose_sec--;
       }
@@ -116,9 +116,7 @@ async function start_turn(io, gameState, room_index) {
       for (get_ready_sec; get_ready_sec > 0; get_ready_sec--) {
         console.log(get_ready_sec);
         io.in(room_index)
-          .emit('get_ready_sec', { sec: get_ready_sec });
-          io.in(room_index)
-          .emit('turn_countdown_sec', { sec: get_ready_sec });          
+          .emit('get_ready_sec', { sec: get_ready_sec });          
         await sleep(1000);
       }
       if (get_ready_sec === 0) {
@@ -265,7 +263,8 @@ async function countdown_sec(io, room_index, gameState) {
         }
         io.in(current_room.index)
           .emit('turn_countdown_sec', {
-            sec: current_turn.countdown
+            sec: current_turn.countdown,
+            ready: true
           });
         current_turn.countdown--;
         await sleep(1000);

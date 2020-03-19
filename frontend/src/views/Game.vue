@@ -55,14 +55,16 @@
               </div>
             </div>
             <div v-else>
-              <div id="ready_wait" v-if="ready_wait">
-                <h3 id="chosen_word" v-if="localPlayer == painter">{{word}}</h3>
-                <h2>{{ready_sec}}</h2>
-              </div>
-              <div id="going_to_draw">
-                <img src="@/assets/pencil.svg" alt />
-                <h1>{{painter}} {{ $t("chat_evt.going_to_draw") }}</h1>
-              </div>
+              <div v-if="show_options === false">
+                <div id="ready_wait" v-if="ready_wait">
+                  <h3 id="chosen_word" v-if="localPlayer == painter">{{word}}</h3>
+                  <h2>{{ready_sec}}</h2>
+                </div>
+                <div id="going_to_draw">
+                  <img src="@/assets/pencil.svg" alt />
+                  <h1>{{painter}} {{ $t("chat_evt.going_to_draw") }}</h1>
+                </div>
+              </div>                
             </div>
           </div>
         </div>
@@ -205,10 +207,12 @@ export default {
       console.log("this is the new data: " + JSON.stringify(newData.players));
     });
     this.socket.on("turn_countdown_sec", data => {
-      if (this.ready_wait) this.ready_wait = false;
-      if (!this.show_drawing) this.set_show_drawing(true);
-      if (this.localPlayer != this.painter) {
-        if (this.show_toolbox) this.set_show_toolbox(false);
+      if(data.ready){
+        if (this.ready_wait) this.ready_wait = false;
+        if (!this.show_drawing) this.set_show_drawing(true);
+        if (this.localPlayer != this.painter) {
+          if (this.show_toolbox) this.set_show_toolbox(false);
+        }
       }
       this.turn_clock = data.sec;
       console.log("Second: " + data.sec);
