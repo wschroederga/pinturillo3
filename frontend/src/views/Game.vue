@@ -32,7 +32,7 @@
               class="word_option"
               @click="choose_word({option_index: index})"
             >{{ option }}</div>
-          </div>
+          </div>      
 
           <div id="drawing-area" v-if="show_drawing" class="has-background-warning">
             <Toolbox v-if="show_toolbox" />
@@ -86,7 +86,7 @@ export default {
     return {
       isWaitingNextTurn: true,
       turn_clock: 99,
-      ready_sec: 3,
+      ready_sec: 5,
       options: [],
       ready_wait: false,
       is_final_scoreboard: false
@@ -101,10 +101,10 @@ export default {
   },
   methods: {
     choose_word(data) {
-      this.set_show_options(false);
-      this.socket.emit("choose_word", data);
       console.log("This is data: ");
       console.log(data);
+      this.set_show_options(false);
+      this.socket.emit("choose_word", data);
       this.set_word(this.options[data.option_index].toUpperCase());
     },
     ...mapMutations({
@@ -138,7 +138,7 @@ export default {
     leave_link: () => {
       let leave_link =
         process.env.NODE_ENV === "production"
-          ? "https://pinturillo3.herokuapp.com"
+          ? "https://pinturillo.herokuapp.com"
           : "http://localhost:8080";
       return leave_link;
     }
@@ -315,6 +315,7 @@ export default {
 #word-selector {
   align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   font-size: 1.5em;
   color: #363636;

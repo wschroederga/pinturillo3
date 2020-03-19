@@ -32,9 +32,9 @@
     <div class="size" @click="set_brush_width(24)">
       <div id="size3"></div>
     </div>
-    <div id="cancel-turn">
+    <!-- <div id="cancel-turn">
       <a class="delete is-large"></a>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

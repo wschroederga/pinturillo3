@@ -351,7 +351,7 @@ io.on('connection', (socket) => {
       return r.index == socket.room_index;
     });
     // must be valid index
-    if (data.option_index >= 0 && data.option_index <= 3) {
+    if (data.option_index >= 0 && data.option_index <= 9) {
       room.current_turn.word = room.current_turn.options[data.option_index];
     }
   });

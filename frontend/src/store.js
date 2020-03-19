@@ -8,7 +8,7 @@ Vue.use(Vuex);
 
 const socketlink =
   process.env.NODE_ENV === "production" ?
-  "https://pinturillo3.herokuapp.com" :
+  "https://pinturillo.herokuapp.com" :
   "localhost:3000";
 
 export default new Vuex.Store({

@@ -10,10 +10,13 @@ var genWords = function(lang){
     
     switch (lang) {
         case 'Español':
-            words = es({ exactly: 3 });
+            words = es({ exactly: 9 });
+            for (var i in words) {
+                words[i] = words[i].normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            }
             break;
         case 'English':
-            words = en({ exactly: 3 });
+            words = en({ exactly: 9 });
             break;
     }
 

@@ -25,7 +25,7 @@ async function start_turn(io, gameState, room_index) {
     let rooms = gameState.rooms;
     let current_room = rooms.find((r) => { return r.index == room_index });
 
-    // recursive function that will will give a turn for every player online for 3 rounds.
+    // recursive function that will will give a turn for every player online for 5 rounds.
     if (current_room) {
       let current_turn = {
         word: '?',
@@ -70,7 +70,6 @@ async function start_turn(io, gameState, room_index) {
       current_room.current_turn.painter_socket = painter_socket_id;
 
       // TURN START
-
       let options = genWords(current_room.language);
       console.log('my options: ' + options);
       current_room.current_turn.options = options;
@@ -89,13 +88,15 @@ async function start_turn(io, gameState, room_index) {
       /*todo: REMOVE AFK PLAYERS!!
        */
 
-      let choose_sec = 7,
-        get_ready_sec = 3;
+      let choose_sec = 30,
+        get_ready_sec = 5;
 
-      // time to let the painter choose the word (7 seconds)
-      console.log("waiting 7 seconds...")
+      // time to let the painter choose the word (30 seconds)
+      console.log("waiting 30 seconds...")
       while (current_turn.word == '?' && choose_sec > 0) {
         console.log(choose_sec)
+        io.in(room_index)
+          .emit('turn_countdown_sec', { sec: choose_sec });        
         await sleep(1000);
         choose_sec--;
       }
@@ -110,13 +111,14 @@ async function start_turn(io, gameState, room_index) {
       io.to(painter_socket_id)
         .emit('reveal_word', { word: current_turn.word });
 
-      // 3 second countdown to get ready to draw
-
+      // 5 second countdown to get ready to draw
       console.log("get ready to draw now")
       for (get_ready_sec; get_ready_sec > 0; get_ready_sec--) {
         console.log(get_ready_sec);
         io.in(room_index)
           .emit('get_ready_sec', { sec: get_ready_sec });
+          io.in(room_index)
+          .emit('turn_countdown_sec', { sec: get_ready_sec });          
         await sleep(1000);
       }
       if (get_ready_sec === 0) {
@@ -147,7 +149,6 @@ async function countdown_sec(io, room_index, gameState) {
     let next_reveal_sec = COUNTDOWN_TIME - freq;
 
     while (!stop_time) {
-
       /* 
       error message if painter:
                 cancels turn
