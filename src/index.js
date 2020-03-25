@@ -318,7 +318,7 @@ io.on('connection', (socket) => {
         if (room.current_turn.countdown !== 0) {
 
           room.players[player_index].score += room.current_turn.countdown;
-          if (room.players[room.painter_index].score === 0) {
+          if (room.players[room.painter_index].points_gained === 0) {
             room.players[room.painter_index].score += room.current_turn.countdown;
             room.players[room.painter_index].points_gained += room.current_turn.countdown;
           }
