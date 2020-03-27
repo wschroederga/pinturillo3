@@ -20,7 +20,7 @@ let server = app.listen(process.env.PORT || 3000);
 console.log('Listening on port ' + (process.env.PORT || 3000));
 
 // pinturillo constants
-const MAX_PLAYERS = 5;
+const MAX_PLAYERS = 15;
 
 let gameState = {
   rooms: []
