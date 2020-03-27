@@ -315,8 +315,7 @@ io.on('connection', (socket) => {
         socket.username != room.players[room.painter_index].username
       ) {
         // change score
-        if (room.current_turn.countdown !== 0) {
-
+        if (room.current_turn.countdown > 0 && room.current_turn.countdown < 99) {
           room.players[player_index].score += room.current_turn.countdown;
           if (room.players[room.painter_index].points_gained === 0) {
             room.players[room.painter_index].score += room.current_turn.countdown;
