@@ -41,10 +41,11 @@ export default {
       console.log(this.guess);
     },
     send_message: function() {
+      this.guess = this.guess.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") 
       if (this.guess != "") {
         this.socket.emit("new_message", {
           username: this.localPlayer,
-          message: this.guess.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") 
+          message: this.guess
         });
         this.guess = "";
       }
