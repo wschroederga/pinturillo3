@@ -44,7 +44,7 @@ export default {
       if (this.guess != "") {
         this.socket.emit("new_message", {
           username: this.localPlayer,
-          message: this.guess.normalize("NFD").replace(/[\u0300-\u036f]/g, "") 
+          message: this.guess.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") 
         });
         this.guess = "";
       }
