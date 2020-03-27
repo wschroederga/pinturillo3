@@ -146,6 +146,9 @@ export default {
     }
   },
   mounted() {
+    this.socket.on("leave_room", data => {
+      this.$router.push({ path: "/" });
+    });
     this.socket.on("reveal_letter", data => {
       if (this.localPlayer != this.painter) {
         let new_word = "";

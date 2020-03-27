@@ -85,9 +85,6 @@ async function start_turn(io, gameState, room_index) {
       io.to(painter_socket_id)
         .emit('show_options', options);
 
-      /*todo: REMOVE AFK PLAYERS!!
-       */
-
       let choose_sec = 30,
         get_ready_sec = 5;
 
@@ -102,7 +99,11 @@ async function start_turn(io, gameState, room_index) {
       }
 
       if (current_turn.word == '?') {
-        current_turn.word = options[chosen_word];
+      /*REMOVE AFK PLAYERS!!*/
+        io.in(room_index)
+        .emit('leave_room', {
+          word_length: current_turn.word.length
+        });
       }
       io.in(room_index)
         .emit('reveal_word_length', {
