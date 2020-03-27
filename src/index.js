@@ -309,7 +309,7 @@ io.on('connection', (socket) => {
       return element.username == socket.username;
     });
 
-    if (data.message.includes(word) && word.length>0) {
+    if (data.message == word && word.length>1) {
       if (
         !has_already_guessed &&
         socket.username != room.players[room.painter_index].username
