@@ -421,11 +421,12 @@ io.on('connection', (socket) => {
         let player_gone = room.players.findIndex(find_player);
         if (player_gone == room.painter_index) {
           room.current_turn.painter_left = true;
-        } else {
-          if (only_painter) {
-            return
-          }       
         } 
+        // else {
+        //   if (only_painter) {
+        //     return
+        //   }       
+        // } 
         room.players.splice(player_gone, 1);
         console.log('This is gamestate: ');
         console.log(gameState);
