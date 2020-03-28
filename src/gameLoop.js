@@ -100,8 +100,11 @@ async function start_turn(io, gameState, room_index) {
 
       if (current_turn.word == '?') {
       /*REMOVE AFK PLAYERS!!*/
+        current_room.players.splice(current_room.painter_index, 1);
         io.in(room_index)
-        .emit('disconnect',{only_painter:true});
+        .emit('left_room', {
+          players: current_room.players
+        });
       }
       io.in(room_index)
         .emit('reveal_word_length', {
