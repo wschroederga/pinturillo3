@@ -147,7 +147,9 @@ export default {
   },
   mounted() {
     this.socket.on("leave_room", () => {
-      this.$router.push({ path: "/" });
+      if (this.localPlayer == this.painter){
+        this.$router.push({ path: "/" });
+      }
     });    
     this.socket.on("reveal_letter", data => {
       if (this.localPlayer != this.painter) {
