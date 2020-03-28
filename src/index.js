@@ -376,7 +376,7 @@ io.on('connection', (socket) => {
       .emit('clear_canvas');
   });
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', function(only_painter) {
     let rooms = gameState.rooms;
     let room_index = socket.room_index;
     let room = rooms.find((r) => {
@@ -421,7 +421,11 @@ io.on('connection', (socket) => {
         let player_gone = room.players.findIndex(find_player);
         if (player_gone == room.painter_index) {
           room.current_turn.painter_left = true;
-        }
+        } else {
+          if (only_painter) {
+            return
+          }       
+        } 
         room.players.splice(player_gone, 1);
         console.log('This is gamestate: ');
         console.log(gameState);
