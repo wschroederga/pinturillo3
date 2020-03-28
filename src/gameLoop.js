@@ -99,8 +99,8 @@ async function start_turn(io, gameState, room_index) {
       }
 
       if (current_turn.word == '?') {
-      /*REMOVE AFK PLAYERS!!*/
-        current_room.current_turn.painter_left = true;        
+        current_turn.word = options[chosen_word];
+        current_turn.num_reports = current_room.players.length - 1;
       }
       io.in(room_index)
         .emit('reveal_word_length', {
@@ -169,13 +169,6 @@ async function countdown_sec(io, room_index, gameState) {
         if (current_turn.painter_left) {
           io.in(room_index)
             .emit('painter_left');
-          current_room.players.splice(current_room.painter_index, 1);
-          io.in(room_index)
-            .emit('left_room', {
-            players: current_room.players
-          });
-          io.in(room_index)
-          .emit('leave_room');
         }
         if (current_turn.is_canceled) {
           io.in(room_index)
