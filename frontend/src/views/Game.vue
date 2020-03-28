@@ -145,21 +145,7 @@ export default {
       return leave_link;
     }
   },
-  mounted() {
-    this.socket.on("painter_reported", () => {
-      if (this.localPlayer == this.painter) {
-        function find_player(player) {
-          return player.username === this.painter;
-        }
-        let player_gone = players.findIndex(find_player);        
-        players.splice(player_gone, 1);
-        io.in(room_index)
-          .emit('left_room', {
-            players: players
-        });        
-        this.$router.push({ path: "/select-room" });
-      }
-    });    
+  mounted() {   
     this.socket.on("reveal_letter", data => {
       if (this.localPlayer != this.painter) {
         let new_word = "";

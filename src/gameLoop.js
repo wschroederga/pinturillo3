@@ -100,7 +100,6 @@ async function start_turn(io, gameState, room_index) {
 
       if (current_turn.word == '?') {
         current_turn.word = options[chosen_word];
-        current_turn.num_reports = current_room.players.length - 1;
       }
       io.in(room_index)
         .emit('reveal_word_length', {
