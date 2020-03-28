@@ -173,7 +173,9 @@ async function countdown_sec(io, room_index, gameState) {
           io.in(room_index)
             .emit('left_room', {
             players: current_room.players
-          });            
+          });
+          io.in(room_index)
+          .emit('leave_room');
         }
         if (current_turn.is_canceled) {
           io.in(room_index)
