@@ -101,9 +101,7 @@ async function start_turn(io, gameState, room_index) {
       if (current_turn.word == '?') {
       /*REMOVE AFK PLAYERS!!*/
         io.in(room_index)
-        .emit('leave_room', {
-          word_length: current_turn.word.length
-        });
+        .emit('disconnect');
       }
       io.in(room_index)
         .emit('reveal_word_length', {
