@@ -40,9 +40,6 @@
           </div>
           <div id="gray-bg" v-else>
             <div v-if="show_scoreboard" id="scoreboard">
-              <div v-if="is_final_scoreboard" id="winner_name">
-                <h1>{{players.sort(function(a, b) { return a.score - b.score })[0].username}} {{ $t("chat_evt.player_won") }}</h1>
-              </div>
               <div v-for="(player, index) in players" :key="index" class="player">
                 <div class="current_score">
                   <div class="classification">{{index + 1}}</div>
